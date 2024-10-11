@@ -14,16 +14,21 @@ app.get("/", (req, res) => {
 });
 
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: ["http://localhost:5173/"],
-    strictOriginWhenCrossOrigin: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Authorization", "Content-Type"],
-    credentials: true,
+    origin: "*",
   })
 );
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use("/auth", AuthRoutes);
 app.use("/products", AuthRoutes);
 

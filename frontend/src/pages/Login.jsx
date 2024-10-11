@@ -13,12 +13,11 @@ export default function Login() {
       setForm({ ...form, password: e.target.value });
     }
   }
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
     let response = await fetch(`${baseurl}${apiEndPoint.login}`, {
       method: "POST",
-      credentials: "include",
       headers: {
-        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -29,7 +28,8 @@ export default function Login() {
     if (response.status === 201) {
       response = await response.json();
       localStorage.setItem("token", response.data.token);
-      console.log("register");
+      console.log("login");
+      window.location.assign("/");
     } else {
       alert("Username or password wrong");
     }

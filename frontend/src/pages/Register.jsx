@@ -16,12 +16,11 @@ export default function Register() {
       setForm({ ...form, password: e.target.value });
     }
   }
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
     let response = await fetch(`${baseurl}${apiEndPoint.register}`, {
       method: "POST",
-      credentials: "include",
       headers: {
-        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -32,7 +31,8 @@ export default function Register() {
     });
     if (response.ok) {
       response = await response.json();
-      console.log("reguster");
+      console.log("register");
+      window.location.assign("/");
     } else {
       alert("Username or password wrong");
     }

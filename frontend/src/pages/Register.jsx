@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { apiEndPoint, baseurl } from "../constants";
 
+import { Link } from "react-router-dom";
+
 export default function Register() {
   const [form, setForm] = useState({
     name: "",
@@ -32,7 +34,7 @@ export default function Register() {
     if (response.ok) {
       response = await response.json();
       console.log("register");
-      window.location.assign("/");
+      window.location.assign("/login");
     } else {
       alert("Username or password wrong");
     }
@@ -106,6 +108,9 @@ export default function Register() {
         <button style={{ padding: ".4rem 2rem" }} onClick={handleSubmit}>
           Register
         </button>
+        <p>
+          Already User Account Exist <Link to={"/login"}>Login</Link>
+        </p>
       </form>
     </div>
   );

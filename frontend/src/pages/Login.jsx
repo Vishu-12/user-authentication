@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { apiEndPoint, baseurl } from "../constants";
 
+import { Link } from "react-router-dom";
+
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
@@ -25,9 +27,9 @@ export default function Login() {
         password: form?.password,
       }),
     });
-    if (response.status === 201) {
+    if (response.ok) {
       response = await response.json();
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.jwtToken);
       console.log("login");
       window.location.assign("/");
     } else {
@@ -86,7 +88,9 @@ export default function Login() {
         <button style={{ padding: ".4rem 2rem" }} onClick={handleSubmit}>
           Login
         </button>
-        <p>Don't have an account ? SignUp</p>
+        <p>
+          Don't have an account ? <Link to={"/register"}>Sign Up</Link>
+        </p>
       </form>
     </div>
   );
